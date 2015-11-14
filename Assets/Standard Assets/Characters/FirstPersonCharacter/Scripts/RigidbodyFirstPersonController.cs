@@ -94,7 +94,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 		private const float maxZPosition = 10 + 5; //Z = 10
 		private const float minZPosition = 10 - 5; //Z = 10
 
-		ThalmicMyo tMyoComponent;
+		//public ThalmicMyo tMyoComponent;
 		private Pose _lastPose = Pose.Unknown;
 
         public Vector3 Velocity
@@ -129,12 +129,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
-			tMyoComponent = GetComponent<ThalmicMyo> ();
+			//tMyoComponent = gameObject.GetComponent<ThalmicMyo> ();
 
             mouseLook.Init (transform, cam.transform);
         }
 
 		float timeToMove = 0;
+		public GameObject myo = null;
         private void Update()
         {
             //RotateView();
@@ -144,7 +145,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
                 m_Jump = true;
             }
 
-
+			ThalmicMyo tMyoComponent = myo.GetComponent<ThalmicMyo> ();
 			Vector3 pos = transform.position;
 			Debug.Log (tMyoComponent.pose);
 			if(Time.time > timeToMove){
