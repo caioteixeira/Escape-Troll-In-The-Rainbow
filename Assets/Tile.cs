@@ -5,7 +5,7 @@ public class Tile : MonoBehaviour {
 
     void LateUpdate()
     {
-        if (!(GetComponent<Renderer>().isVisible) && Time.realtimeSinceStartup > 1.0f)
+        if (!(GetComponent<Renderer>().isVisible) && Time.realtimeSinceStartup > 2.0f)
         {
             ScenarioController.Instance.InstantiateTile();
             Destroy(gameObject);

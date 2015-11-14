@@ -22,6 +22,8 @@ public class ScenarioController : MonoBehaviour {
 	void Start () {
         InstantiateTile();
         InstantiateTile();
+        InstantiateTile();
+        InstantiateTile();
 	}
 
     public void InstantiateTile()
