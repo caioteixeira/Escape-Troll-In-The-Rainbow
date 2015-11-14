@@ -33,6 +33,10 @@ public class ScenarioController : MonoBehaviour {
         {
             return;
         }
+        if (tileIndex == 0)
+        {
+            Shuffle();
+        }
 
         GameObject newTile = Instantiate(prefabs[tileIndex]);
         
@@ -44,5 +48,18 @@ public class ScenarioController : MonoBehaviour {
         //Update the index
         tileIndex = tileIndex + 1>= prefabs.Length ? 0 : tileIndex + 1;
         actualTile = newTile;
+    }
+
+    //Randomize tile order
+    private void Shuffle()
+    {
+        // Knuth shuffle algorithm :: courtesy of Wikipedia :)
+        for (int t = 0; t < prefabs.Length; t++)
+        {
+            GameObject tmp = prefabs[t];
+            int r = Random.Range(t, prefabs.Length);
+            prefabs[t] = prefabs[r];
+            prefabs[r] = tmp;
+        }
     }
 }
