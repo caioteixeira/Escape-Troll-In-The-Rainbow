@@ -73,7 +73,7 @@ namespace EarthTroll.Player
                     float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-				else if (Input.GetButton("Fire1") || (tMyoComponent.pose == Pose.FingersSpread && tMyoComponent.pose != _lastPose))
+				else if (Input.GetButton("Fire1") || (tMyoComponent.pose == Pose.Fist && tMyoComponent.pose != _lastPose))
                 {
                     FireProjectile();
                 }
