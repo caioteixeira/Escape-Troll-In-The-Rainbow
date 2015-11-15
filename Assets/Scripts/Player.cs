@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 using System;
@@ -19,14 +19,15 @@ namespace EarthTroll.Player
 		public Camera cam;
 
 		public GameObject myo;
-		public ThalmicMyo tMyoComponent;
+		public bool move = true;
+		private ThalmicMyo tMyoComponent;
 		private Pose _lastPose = Pose.Unknown;
 
 		private Rigidbody m_RigidBody;
 		private CapsuleCollider m_Capsule;
-		
-		private const float maxZPosition = 10 + 5; //Z = 10
-		private const float minZPosition = 10 - 5; //Z = 10
+
+		private float maxZPosition;
+		private float minZPosition;
 		private float timeToMove = 0;
 		
 		public Vector3 Velocity
@@ -39,6 +40,9 @@ namespace EarthTroll.Player
 			m_RigidBody = GetComponent<Rigidbody>();
 			m_Capsule = GetComponent<CapsuleCollider>();
 			tMyoComponent = myo.GetComponent<ThalmicMyo> ();
+
+			maxZPosition = transform.position.z + 3;
+			minZPosition = transform.position.z - 3;
 		}
 
 		private void Update()
@@ -49,11 +53,11 @@ namespace EarthTroll.Player
 				_lastPose = tMyoComponent.pose;
 				
 				if(tMyoComponent.pose == Pose.WaveIn){
-					float posZ = pos.z + 5 > maxZPosition ? maxZPosition : pos.z + 5;
+					float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
 					transform.position = new Vector3(pos.x, pos.y, posZ);
 				}
 				else if(tMyoComponent.pose == Pose.WaveOut){
-					float posZ = pos.z - 5 < minZPosition ? minZPosition : pos.z - 5;
+					float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
 					transform.position = new Vector3(pos.x, pos.y, posZ);
 				}
 				timeToMove = Time.time + 0.1f; //2 is the cooldown
@@ -71,7 +75,7 @@ namespace EarthTroll.Player
 				Debug.Log(fireRate);
 			}
 			
-			m_RigidBody.velocity = new Vector3((500 + fireRate*100) * Time.fixedDeltaTime, 0, 0);
+			if(move) m_RigidBody.velocity = new Vector3((500 + fireRate*100) * Time.fixedDeltaTime, 0, 0);
 		}
 		
 		
