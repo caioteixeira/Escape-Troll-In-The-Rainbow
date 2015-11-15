@@ -29,4 +29,23 @@ public class GameManager : MonoBehaviour {
 		yield return new WaitForSeconds(1f);
 		Time.timeScale = 0f;
 	}
+
+    public bool SetNewScore()
+    {
+        int high = PlayerPrefs.GetInt("HighScore");
+        if (score > high)
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+            return true;
+        }
+        return false;
+    }
+
+    public int GetHighScore()
+    {
+        if (PlayerPrefs.HasKey("HighScore"))
+            return PlayerPrefs.GetInt("HighScore");
+        else
+            return -1;
+    }
 }
