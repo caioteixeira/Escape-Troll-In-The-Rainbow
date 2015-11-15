@@ -6,7 +6,7 @@ using System;
 public class GameManager : MonoBehaviour {
 	public int score;
 	public HUDManager hud;
-	public Player player; 
+	public Player player;
 
 	public Camera playerCam;
 	public Camera cam;
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour {
 
 	public IEnumerator GameOver() {
 		hud.GameOver();
+		GetComponent<AudioSource> ().Play ();
 		yield return new WaitForSeconds(0.5f);
 		Time.timeScale = 0f;
 	}
