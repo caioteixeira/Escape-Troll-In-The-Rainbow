@@ -15,6 +15,7 @@ namespace EarthTroll.Player
 	[RequireComponent(typeof (CapsuleCollider))]
 	public class Player : MonoBehaviour
 	{	
+		public GameManager gm;
 		public Camera cam;
 		public GameObject myo;
 		public bool move = true;
@@ -49,26 +50,22 @@ namespace EarthTroll.Player
 
 		private void Update()
 		{
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                FireProjectile();
-            }
-
 			Vector3 pos = transform.position;
-			if(tMyoComponent.pose != _lastPose &&  Time.time > timeToMove){
-				_lastPose = tMyoComponent.pose;
+			float input = Input.GetAxisRaw("Horizontal");
 
-                if (tMyoComponent.pose == Pose.WaveIn || GetInput().x == -1)
+			if(Time.time > timeToMove){
+				_lastPose = tMyoComponent.pose;
+				if (input == -1 || (tMyoComponent.pose == Pose.WaveIn && tMyoComponent.pose != _lastPose))
                 {
                     float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-                else if (tMyoComponent.pose == Pose.WaveOut || GetInput().x == 1)
+				else if (input == 1 || (tMyoComponent.pose == Pose.WaveOut && tMyoComponent.pose != _lastPose))
                 {
                     float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-                else if (tMyoComponent.pose == Pose.FingersSpread || Input.GetKeyDown (KeyCode.Space))
+				else if (Input.GetButton("Fire1") || (tMyoComponent.pose == Pose.FingersSpread && tMyoComponent.pose != _lastPose))
                 {
                     FireProjectile();
                 }
@@ -89,22 +86,7 @@ namespace EarthTroll.Player
 			}
 			*/
 			
-			if(move) m_RigidBody.velocity = new Vector3(speed * Time.deltaTime, 0, 0);
-
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                FireProjectile();
-            }
-            
-            if (tMyoComponent.pose != _lastPose)
-            {
-               
-                if (tMyoComponent.pose == Pose.FingersSpread)
-                {
-                    FireProjectile();
-                }
-            }
+			if(move) m_RigidBody.velocity = new Vector3(speed * Time.fixedDeltaTime, 0, 0);
 		}
 		
 		
@@ -122,17 +104,14 @@ namespace EarthTroll.Player
 		
 		public void OnTriggerEnter(Collider col)
 		{
-			if(col.tag != null && col.tag == "Obstacle"){
-				Debug.Log ("Game Over");
+			if(col.tag == "Obstacle"){
+				gm.StartCoroutine(gm.GameOver());
 			}
 		}
 
         public void FireProjectile()
         {
-           GameObject obj = Instantiate(projectile, transform.position + new Vector3(1.5f, 1.0f), Quaternion.identity) as GameObject;
-           Rigidbody rigidbody = obj.GetComponent<Rigidbody>();
-           rigidbody.velocity = GetComponent<Rigidbody>().velocity * 3.0f;
-           Destroy(obj, 10.0f);
+            Instantiate(projectile, transform.position + new Vector3(1.5f, 1.0f), Quaternion.identity);
         }
 	}
 }
