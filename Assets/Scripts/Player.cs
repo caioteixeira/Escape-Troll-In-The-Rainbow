@@ -54,7 +54,7 @@ namespace EarthTroll.Player
 			float input = Input.GetAxisRaw("Horizontal");
 
 			if(Time.time > timeToMove){
-				_lastPose = tMyoComponent.pose;
+				Debug.Log(tMyoComponent.pose);
 				if (input == -1 || (tMyoComponent.pose == Pose.WaveIn && tMyoComponent.pose != _lastPose))
                 {
                     float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
@@ -70,6 +70,7 @@ namespace EarthTroll.Player
                     FireProjectile();
                 }
 				timeToMove = Time.time + 0.1f; //2 is the cooldown
+				_lastPose = tMyoComponent.pose;
 			}
 		}
 		
