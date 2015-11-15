@@ -18,6 +18,7 @@ public class ScenarioController : MonoBehaviour {
     public GameObject[] prefabs;
     public GameObject actualTile;
     private int tileIndex = 0;
+    public int passedTiles = 0;
 
 	void Start () {
         InstantiateTile();
@@ -48,6 +49,8 @@ public class ScenarioController : MonoBehaviour {
         //Update the index
         tileIndex = tileIndex + 1>= prefabs.Length ? 0 : tileIndex + 1;
         actualTile = newTile;
+
+        passedTiles++;
     }
 
     //Randomize tile order
