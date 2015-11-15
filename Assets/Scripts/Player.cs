@@ -58,17 +58,17 @@ namespace EarthTroll.Player
 			if(tMyoComponent.pose != _lastPose &&  Time.time > timeToMove){
 				_lastPose = tMyoComponent.pose;
 
-                if (tMyoComponent.pose == Pose.WaveIn || Input.GetKeyDown(KeyCode.RightArrow))
+                if (tMyoComponent.pose == Pose.WaveIn || GetInput().x == -1)
                 {
                     float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-                else if (tMyoComponent.pose == Pose.WaveOut || Input.GetKeyDown(KeyCode.LeftArrow))
+                else if (tMyoComponent.pose == Pose.WaveOut || GetInput().x == 1)
                 {
                     float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-                else if (tMyoComponent.pose == Pose.FingersSpread)
+                else if (tMyoComponent.pose == Pose.FingersSpread || Input.GetKeyDown (KeyCode.Space))
                 {
                     FireProjectile();
                 }
@@ -89,7 +89,7 @@ namespace EarthTroll.Player
 			}
 			*/
 			
-			if(move) m_RigidBody.velocity = new Vector3(speed * Time.fixedDeltaTime, 0, 0);
+			if(move) m_RigidBody.velocity = new Vector3(speed * Time.deltaTime, 0, 0);
 
 
             if (Input.GetKeyDown(KeyCode.Space))
