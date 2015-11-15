@@ -129,8 +129,9 @@ namespace EarthTroll.Player
 
         public void FireProjectile()
         {
-           Rigidbody rigidbody = Instantiate(projectile, transform.position + new Vector3(1.5f, 1.0f), Quaternion.identity) as Rigidbody;
-           rigidbody.velocity = GetComponent<Rigidbody>().velocity * 5.0f;
+           GameObject obj = Instantiate(projectile, transform.position + new Vector3(1.5f, 1.0f), Quaternion.identity) as GameObject;
+           Rigidbody rigidbody = obj.GetComponent<Rigidbody>();
+           rigidbody.velocity = GetComponent<Rigidbody>().velocity * 3.0f;
         }
 	}
 }
