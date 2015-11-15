@@ -80,6 +80,7 @@ namespace EarthTroll.Player
 
 				_lastPose = tMyoComponent.pose;
 				timeToMove = Time.time + 0.1f; //2 is the cooldown
+				_lastPose = tMyoComponent.pose;
 			}
 		}
 		
@@ -87,14 +88,6 @@ namespace EarthTroll.Player
 		float fireRate = 0;
 		private void FixedUpdate()
 		{
-			/* IF WE GET TIME WORK RUNNING */
-			/*
-			if(Input.GetKey(KeyCode.A)){
-				fireRate = (Time.time - timeSinceFire);
-				timeSinceFire = Time.time;
-				Debug.Log(fireRate);
-			}
-			*/
 			
 			if(move) m_RigidBody.velocity = new Vector3(speed * Time.fixedDeltaTime, 0, 0);
 		}
