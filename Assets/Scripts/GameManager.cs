@@ -19,17 +19,14 @@ public class GameManager : MonoBehaviour {
 
 	void Update () {
 		score = playerPositionOffset + ((int)player.transform.position.x);
-<<<<<<< HEAD
-		player.speed = originalPlayerSpeed + player.speed*(int)Math.Log(Math.Abs(player.transform.position.x));
+
+		player.speed = originalPlayerSpeed + (int)Math.Log(Math.Abs(player.transform.position.x));
 	}	
-=======
-		player.speed = originalPlayerSpeed + (int)player.transform.position.x;
-	}
+	
 
 	public IEnumerator GameOver() {
 		hud.GameOver();
 		yield return new WaitForSeconds(1f);
 		Time.timeScale = 0f;
 	}
->>>>>>> 48c4aa64b7349899d2b7c5e139c50fab53947487
 }
