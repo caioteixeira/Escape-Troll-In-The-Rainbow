@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
 
 	public IEnumerator GameOver() {
 		hud.GameOver();
-		yield return new WaitForSeconds(1f);
+		yield return new WaitForSeconds(0.5f);
 		Time.timeScale = 0f;
 	}
 

@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour {
     void OnCollisionEnter(Collision col)
     {
         GameObject explosion = Instantiate(explosionParticles, transform.position, Quaternion.identity) as GameObject;
-        if (col.gameObject.tag == "Obstacle")
+        if (col.gameObject.tag == "Cat")
         {
             Destroy(col.gameObject, 0.05f);
         }
@@ -19,7 +19,7 @@ public class Projectile : MonoBehaviour {
     void OnTriggerEnter(Collider col)
     {
         
-        if (col.tag == "Obstacle")
+        if (col.tag == "Cat")
         {
             GameObject explosion = Instantiate(explosionParticles, transform.position, Quaternion.identity) as GameObject;
             Destroy(col.gameObject, 0.05f);

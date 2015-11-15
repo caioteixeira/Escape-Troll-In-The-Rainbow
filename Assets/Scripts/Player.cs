@@ -104,7 +104,7 @@ namespace EarthTroll.Player
 		
 		public void OnTriggerEnter(Collider col)
 		{
-			if(col.tag == "Obstacle"){
+			if(col.tag == "Obstacle" || col.tag == "Cat"){
 				gm.StartCoroutine(gm.GameOver());
 			}
 		}
