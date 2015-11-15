@@ -140,15 +140,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         {
             //RotateView();
 
-            if (CrossPlatformInputManager.GetButtonDown("Jump") && !m_Jump)
-            {
-                m_Jump = true;
-            }
 
 			ThalmicMyo tMyoComponent = myo.GetComponent<ThalmicMyo> ();
 			Vector3 pos = transform.position;
 			Debug.Log (tMyoComponent.pose);
-			if(Time.time > timeToMove){
+			if(tMyoComponent.pose != _lastPose &&  Time.time > timeToMove){
+				_lastPose = tMyoComponent.pose;
+
 				if(tMyoComponent.pose == Pose.WaveIn){
 					float posZ = pos.z + 5 > maxZPosition ? maxZPosition : pos.z + 5;
 					transform.position = new Vector3(pos.x, pos.y, posZ);

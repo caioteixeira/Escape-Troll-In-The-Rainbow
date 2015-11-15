@@ -118,8 +118,7 @@ public class ThalmicHub : MonoBehaviour
     }
 
     private bool createHub () {
-		/*
-        try {
+      	try {
             _hub = new Thalmic.Myo.Hub (applicationIdentifier, hub_MyoPaired);
 
             _hub.SetLockingPolicy (lockingPolicy);
@@ -127,7 +126,6 @@ public class ThalmicHub : MonoBehaviour
             Debug.Log ("ThalmicHub failed to initialize.");
             return false;
         }
-        */
         return true;
     }
 
