@@ -15,6 +15,7 @@ namespace EarthTroll.Player
 	[RequireComponent(typeof (CapsuleCollider))]
 	public class Player : MonoBehaviour
 	{	
+		public GameManager gm;
 		public Camera cam;
 		public GameObject myo;
 		public bool move = true;
@@ -49,26 +50,22 @@ namespace EarthTroll.Player
 
 		private void Update()
 		{
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                FireProjectile();
-            }
-
 			Vector3 pos = transform.position;
-			if(tMyoComponent.pose != _lastPose &&  Time.time > timeToMove){
-				_lastPose = tMyoComponent.pose;
+			float input = Input.GetAxisRaw("Horizontal");
 
-                if (tMyoComponent.pose == Pose.WaveIn || Input.GetKeyDown(KeyCode.RightArrow))
+			if((tMyoComponent == null || tMyoComponent.pose != _lastPose) && Time.time > timeToMove){
+				_lastPose = tMyoComponent.pose;
+				if (input == -1 || tMyoComponent.pose == Pose.WaveIn)
                 {
                     float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-                else if (tMyoComponent.pose == Pose.WaveOut || Input.GetKeyDown(KeyCode.LeftArrow))
+				else if (input == 1 || tMyoComponent.pose == Pose.WaveOut)
                 {
                     float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-                else if (tMyoComponent.pose == Pose.FingersSpread)
+                else if (tMyoComponent.pose == Pose.FingersSpread || Input.GetButton("Fire1"))
                 {
                     FireProjectile();
                 }
@@ -107,8 +104,8 @@ namespace EarthTroll.Player
 		
 		public void OnTriggerEnter(Collider col)
 		{
-			if(col.tag != null && col.tag == "Obstacle"){
-				Debug.Log ("Game Over");
+			if(col.tag == "Obstacle"){
+				gm.StartCoroutine(gm.GameOver());
 			}
 		}
 
