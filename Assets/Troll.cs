@@ -10,6 +10,6 @@ public class Troll : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		GetComponent<Rigidbody>().velocity = new Vector3(-5, 0, 0);
 	}
 }

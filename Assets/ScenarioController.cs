@@ -29,7 +29,6 @@ public class ScenarioController : MonoBehaviour {
 
     public void InstantiateTile()
     {
-        Debug.Log(tileIndex);
         if (tileIndex < 0 || tileIndex >= prefabs.Length)
         {
             return;
