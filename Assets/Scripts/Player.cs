@@ -29,6 +29,8 @@ namespace EarthTroll.Player
 		private float maxZPosition;
 		private float minZPosition;
 		private float timeToMove = 0;
+
+        public GameObject projectile;
 		
 		public Vector3 Velocity
 		{
@@ -47,19 +49,30 @@ namespace EarthTroll.Player
 
 		private void Update()
 		{
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                FireProjectile();
+            }
+
 			Vector3 pos = transform.position;
 			Debug.Log (tMyoComponent.pose);
 			if(tMyoComponent.pose != _lastPose &&  Time.time > timeToMove){
 				_lastPose = tMyoComponent.pose;
-				
-				if(tMyoComponent.pose == Pose.WaveIn){
-					float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
-					transform.position = new Vector3(pos.x, pos.y, posZ);
-				}
-				else if(tMyoComponent.pose == Pose.WaveOut){
-					float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
-					transform.position = new Vector3(pos.x, pos.y, posZ);
-				}
+
+                if (tMyoComponent.pose == Pose.WaveIn || Input.GetKeyDown(KeyCode.RightArrow))
+                {
+                    float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
+                    transform.position = new Vector3(pos.x, pos.y, posZ);
+                }
+                else if (tMyoComponent.pose == Pose.WaveOut || Input.GetKeyDown(KeyCode.LeftArrow))
+                {
+                    float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
+                    transform.position = new Vector3(pos.x, pos.y, posZ);
+                }
+                else if (tMyoComponent.pose == Pose.FingersSpread)
+                {
+                    FireProjectile();
+                }
 				timeToMove = Time.time + 0.1f; //2 is the cooldown
 			}
 		}
@@ -96,5 +109,10 @@ namespace EarthTroll.Player
 				Debug.Log ("Game Over");
 			}
 		}
+
+        public void FireProjectile()
+        {
+            Instantiate(projectile, transform.position + new Vector3(1.5f, 1.0f), Quaternion.identity);
+        }
 	}
 }
