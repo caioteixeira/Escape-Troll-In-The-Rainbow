@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using EarthTroll.Player;
+using System;
 
 public class GameManager : MonoBehaviour {
 	public int score;
@@ -18,8 +19,10 @@ public class GameManager : MonoBehaviour {
 
 	void Update () {
 		score = playerPositionOffset + ((int)player.transform.position.x);
-		player.speed = originalPlayerSpeed + (int)player.transform.position.x;
-	}
+
+		player.speed = originalPlayerSpeed + (int)Math.Log(Math.Abs(player.transform.position.x));
+	}	
+	
 
 	public IEnumerator GameOver() {
 		hud.GameOver();
