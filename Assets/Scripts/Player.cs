@@ -90,6 +90,21 @@ namespace EarthTroll.Player
 			*/
 			
 			if(move) m_RigidBody.velocity = new Vector3(speed * Time.fixedDeltaTime, 0, 0);
+
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                FireProjectile();
+            }
+            
+            if (tMyoComponent.pose != _lastPose)
+            {
+               
+                if (tMyoComponent.pose == Pose.FingersSpread)
+                {
+                    FireProjectile();
+                }
+            }
 		}
 		
 		
@@ -115,7 +130,7 @@ namespace EarthTroll.Player
         public void FireProjectile()
         {
            Rigidbody rigidbody = Instantiate(projectile, transform.position + new Vector3(1.5f, 1.0f), Quaternion.identity) as Rigidbody;
-           rigidbody.velocity = GetComponent<Rigidbody>().velocity;
+           rigidbody.velocity = GetComponent<Rigidbody>().velocity * 5.0f;
         }
 	}
 }
