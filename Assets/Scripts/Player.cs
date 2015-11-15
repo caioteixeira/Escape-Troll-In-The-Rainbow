@@ -132,6 +132,7 @@ namespace EarthTroll.Player
            GameObject obj = Instantiate(projectile, transform.position + new Vector3(1.5f, 1.0f), Quaternion.identity) as GameObject;
            Rigidbody rigidbody = obj.GetComponent<Rigidbody>();
            rigidbody.velocity = GetComponent<Rigidbody>().velocity * 3.0f;
+           Destroy(obj, 10.0f);
         }
 	}
 }
