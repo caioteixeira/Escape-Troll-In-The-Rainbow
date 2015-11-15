@@ -14,12 +14,12 @@ namespace EarthTroll.Player
 	[RequireComponent(typeof (Rigidbody))]
 	[RequireComponent(typeof (CapsuleCollider))]
 	public class Player : MonoBehaviour
-	{
-		
+	{	
 		public Camera cam;
-
 		public GameObject myo;
 		public bool move = true;
+		public int speed = 500;
+
 		private ThalmicMyo tMyoComponent;
 		private Pose _lastPose = Pose.Unknown;
 
@@ -48,7 +48,6 @@ namespace EarthTroll.Player
 		private void Update()
 		{
 			Vector3 pos = transform.position;
-			Debug.Log (tMyoComponent.pose);
 			if(tMyoComponent.pose != _lastPose &&  Time.time > timeToMove){
 				_lastPose = tMyoComponent.pose;
 				
@@ -68,14 +67,16 @@ namespace EarthTroll.Player
 		float fireRate = 0;
 		private void FixedUpdate()
 		{
-			
+			/* IF WE GET TIME WORK RUNNING */
+			/*
 			if(Input.GetKey(KeyCode.A)){
 				fireRate = (Time.time - timeSinceFire);
 				timeSinceFire = Time.time;
 				Debug.Log(fireRate);
 			}
+			*/
 			
-			if(move) m_RigidBody.velocity = new Vector3((500 + fireRate*100) * Time.fixedDeltaTime, 0, 0);
+			if(move) m_RigidBody.velocity = new Vector3(speed * Time.fixedDeltaTime, 0, 0);
 		}
 		
 		
@@ -91,8 +92,9 @@ namespace EarthTroll.Player
 		}
 
 		
-		public void OnTriggerEnter(Collider col){
-			if(col.tag == "Obstacle"){
+		public void OnTriggerEnter(Collider col)
+		{
+			if(col.tag != null && col.tag == "Obstacle"){
 				Debug.Log ("Game Over");
 			}
 		}
