@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void Update () {
-		score += ((int)player.transform.position.x * 100);
+		score += playerPositionOffset + ((int)player.transform.position.x);
 		player.speed = originalPlayerSpeed + (int)player.transform.position.x;
 	}	
 }
