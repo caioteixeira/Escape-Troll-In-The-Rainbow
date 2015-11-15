@@ -21,23 +21,9 @@ public class HUDManager : MonoBehaviour {
 
 	public void GameOver () {
 		GetComponent<Animator>().SetTrigger("GameOver");
+		gm.SetNewScore();
 		gameOverScoreText.text = "Score: " + gm.score;
-        if (gm.SetNewScore())
-        {
-            highText.text = "High Score!";
-        }
-        else
-        {
-            int high = gm.GetHighScore();
-            if (high > 0)
-            {
-                highText.text = "High Score: " + high;
-            }
-            else
-            {
-                highText.text = "";
-            }
-        }
+		highText.text = "High Score: " + gm.GetHighScore();
 	}
 
 	public void Retry () {
