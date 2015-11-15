@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour {
 	public Camera playerCam;
 	public Camera cam;
 
+	public Material cutscene;
+	public Material normal;
+
 	private int originalPlayerSpeed = 0;
 	private int playerPositionOffset = 0;
 
@@ -32,16 +35,22 @@ public class GameManager : MonoBehaviour {
 		playerCam.enabled = false;
 		cam.enabled = true;
 
+		RenderSettings.skybox = cutscene;
+
 		yield return new WaitForSeconds(2.5f);
 
 		playerCam.enabled = true;
 		cam.enabled = false;
 
+		RenderSettings.skybox = normal;
+
 	}
 
 	public IEnumerator GameOver() {
 		hud.GameOver();
-		GetComponent<AudioSource> ().Play ();
+		foreach(AudioSource a in GetComponents<AudioSource> ()){
+			a.Play();
+		}
 		yield return new WaitForSeconds(0.5f);
 		Time.timeScale = 0f;
 	}

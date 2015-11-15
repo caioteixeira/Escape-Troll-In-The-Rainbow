@@ -12,19 +12,22 @@ public class Projectile : MonoBehaviour {
         {
             Destroy(col.gameObject, 0.05f);
         }
+
+		;
         Destroy(gameObject);
         Destroy(explosion, 10.0f);
     }
 
     void OnTriggerEnter(Collider col)
     {
-        
         if (col.tag == "Cat")
         {
             GameObject explosion = Instantiate(explosionParticles, transform.position, Quaternion.identity) as GameObject;
             Destroy(col.gameObject, 0.05f);
             Destroy(gameObject);
             Destroy(explosion, 10.0f);
+
+
         }
        
     }
