@@ -24,11 +24,13 @@ public class GameManager : MonoBehaviour {
 
 		StartCoroutine(StartCutscene());
 	}
-
 	void Update () {
 		score = playerPositionOffset + ((int)player.transform.position.x);
-
+		
 		player.speed = originalPlayerSpeed + (int)Math.Log(Math.Abs(player.transform.position.x));
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			Application.Quit();
+		}
 	}	
 
 	IEnumerator StartCutscene() {
