@@ -46,6 +46,16 @@ namespace EarthTroll.Player
 
 			maxZPosition = transform.position.z + 3;
 			minZPosition = transform.position.z - 3;
+
+			StartCoroutine(Initialize());
+
+
+		}
+
+		IEnumerator Initialize() {
+			move = false;
+			yield return new WaitForSeconds(2.5f);
+			move = true;
 		}
 
 		private void Update()
