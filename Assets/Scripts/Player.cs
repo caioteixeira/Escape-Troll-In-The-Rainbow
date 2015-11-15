@@ -53,19 +53,19 @@ namespace EarthTroll.Player
 			Vector3 pos = transform.position;
 			float input = Input.GetAxisRaw("Horizontal");
 
-			if((tMyoComponent == null || tMyoComponent.pose != _lastPose) && Time.time > timeToMove){
+			if(Time.time > timeToMove){
 				_lastPose = tMyoComponent.pose;
-				if (input == -1 || tMyoComponent.pose == Pose.WaveIn)
+				if (input == -1 || (tMyoComponent.pose == Pose.WaveIn && tMyoComponent.pose != _lastPose))
                 {
                     float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-				else if (input == 1 || tMyoComponent.pose == Pose.WaveOut)
+				else if (input == 1 || (tMyoComponent.pose == Pose.WaveOut && tMyoComponent.pose != _lastPose))
                 {
                     float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
                     transform.position = new Vector3(pos.x, pos.y, posZ);
                 }
-                else if (tMyoComponent.pose == Pose.FingersSpread || Input.GetButton("Fire1"))
+				else if (Input.GetButton("Fire1") || (tMyoComponent.pose == Pose.FingersSpread && tMyoComponent.pose != _lastPose))
                 {
                     FireProjectile();
                 }
