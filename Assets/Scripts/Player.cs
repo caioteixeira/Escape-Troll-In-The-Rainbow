@@ -5,9 +5,6 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using System.Collections;
-using LockingPolicy = Thalmic.Myo.LockingPolicy;
-using Pose = Thalmic.Myo.Pose;
-using VibrationType = Thalmic.Myo.VibrationType;
 
 namespace EarthTroll.Player
 {
@@ -17,12 +14,8 @@ namespace EarthTroll.Player
 	{	
 		public GameManager gm;
 		public Camera cam;
-		public GameObject myo;
 		public bool move = true;
 		public int speed = 500;
-
-		private ThalmicMyo tMyoComponent;
-		private Pose _lastPose = Pose.Unknown;
 
 		private Rigidbody m_RigidBody;
 		private CapsuleCollider m_Capsule;
@@ -42,8 +35,6 @@ namespace EarthTroll.Player
 		{
 			m_RigidBody = GetComponent<Rigidbody>();
 			m_Capsule = GetComponent<CapsuleCollider>();
-			myo = GameObject.FindGameObjectWithTag("Myo");
-			tMyoComponent = myo.GetComponent<ThalmicMyo> ();
 
 			maxZPosition = transform.position.z + 3;
 			minZPosition = transform.position.z - 3;
@@ -60,30 +51,23 @@ namespace EarthTroll.Player
 		private void Update()
 		{
 			Vector3 pos = transform.position;
-			float input = Input.GetAxisRaw("Horizontal");
+			float input = Input.GetAxisRaw ("Horizontal");
 
-			if(Time.time > timeToMove){
-				if (input == -1 || (tMyoComponent.pose == Pose.WaveIn && tMyoComponent.pose != _lastPose))
-                {
-                    float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
-                    transform.position = new Vector3(pos.x, pos.y, posZ);
-                }
-				else if (input == 1 || (tMyoComponent.pose == Pose.WaveOut && tMyoComponent.pose != _lastPose))
-                {
-                    float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
-                    transform.position = new Vector3(pos.x, pos.y, posZ);
-                }
-				else if (Input.GetButton("Fire1") || (tMyoComponent.pose == Pose.Fist && tMyoComponent.pose != _lastPose))
-                {
-                    FireProjectile();
-                }
+			if (Time.time > timeToMove) {
+				if (input == -1) {
+					float posZ = pos.z + 3 > maxZPosition ? maxZPosition : pos.z + 3;
+					transform.position = new Vector3 (pos.x, pos.y, posZ);
+				} else if (input == 1) {
+					float posZ = pos.z - 3 < minZPosition ? minZPosition : pos.z - 3;
+					transform.position = new Vector3 (pos.x, pos.y, posZ);
+				} else if (Input.GetButton ("Fire1")) {
+					FireProjectile ();
+				}
 
-				_lastPose = tMyoComponent.pose;
-				timeToMove = Time.time + 0.1f; //2 is the cooldown
-				_lastPose = tMyoComponent.pose;
+				timeToMove = Time.time + 0.1f; //2 is the cooldown			}
 			}
-		}
 		
+		}
 		float timeSinceFire = 0;
 		float fireRate = 0;
 		private void FixedUpdate()
